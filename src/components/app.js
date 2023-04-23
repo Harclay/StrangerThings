@@ -1,8 +1,11 @@
-import react from "react";
+import React from "react";
+import Register from "./register";
 
 function App () {
   return(
-    <h1>hi everyone</h1>
+    <div>
+      <Register />
+    </div>
   )
 }
 
