@@ -3,7 +3,8 @@ import { Routes, Route, } from "react-router-dom";
 import {
   Register,
   Posts,
-  Login
+  Login,
+  CreatePost
   
 } from "./"
 import { fetchPosts } from "../ajax-requests";
@@ -36,11 +37,14 @@ function App() {
     setPosts(getPosts());
   }, [token])
 
+  
+
   console.log(posts)
 
   return (
     <div>
       <Routes>
+        <Route path="/create-post" element={<CreatePost token={token} getPosts={getPosts}/>}/>
         <Route path='/login' element={<Login setToken={setToken}/>}/>
         <Route path='/' element={<Posts posts={posts}/>}/>
         <Route path='/register'element={<Register setToken={setToken}/>}/>
