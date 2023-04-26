@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { registerUser } from "../ajax-requests";
 
-function Register(props) {
+function Register({ setToken }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,7 +13,7 @@ function Register(props) {
 
    const results = await registerUser(user);
    if(results.success) {
-      props.setToken(results.data.token)
+      setToken(results.data.token)
       window.localStorage.setItem('token', results.data.token)
    }
   }
