@@ -18,10 +18,10 @@ function App() {
     }
   }
   
-  async function getPosts(){
+  async function getPosts() {
     const results = await fetchPosts();
-    if(results.success) {
-      setPosts(results.data.posts)
+    if (results.success) {
+      setPosts(results.data.posts);
     }
   }
 
