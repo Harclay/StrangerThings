@@ -1,18 +1,23 @@
 import React, {useState, useEffect} from "react";
-import { Routes, Route, } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import {
   Register,
   Posts,
   Login,
-  CreatePost
+  CreatePost,
+  UpdatePost,
+  Nav
   
 } from "./"
-import { fetchPosts } from "../ajax-requests";
+import { fetchPosts, myData } from "../ajax-requests";
 
 
 function App() {
   const [token, setToken] = useState('');
   const [posts, setPosts] = useState([]);
+  const [user, setUser] = useState ({});
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const navigate = useNavigate();
   const tokenStoreage = window.localStorage.getItem('token')
 
   function tokenCheck(){
@@ -22,9 +27,16 @@ function App() {
   }
   
   async function getPosts() {
-    const results = await fetchPosts();
+    const results = await fetchPosts(token);
     if (results.success) {
       setPosts(results.data.posts);
+    }
+  }
+
+  async function getMyData() {
+    const results = await myData(token);
+    if (results.success) {
+      setUser(results.data);
     }
   }
 
@@ -35,6 +47,10 @@ function App() {
 
    useEffect(() => {
     setPosts(getPosts());
+    if(token) {
+      getMyData();
+      setIsLoggedIn(true)
+    }
   }, [token])
 
   
@@ -43,11 +59,16 @@ function App() {
 
   return (
     <div>
+      <Nav 
+        setToken={setToken} 
+        setIsLoggedIn={setIsLoggedIn} 
+        isLoggedIn={isLoggedIn}/>
       <Routes>
+        <Route path='/update-post:/id' element={<UpdatePost />}/>
         <Route path="/create-post" element={<CreatePost token={token} getPosts={getPosts}/>}/>
-        <Route path='/login' element={<Login setToken={setToken}/>}/>
+        <Route path='/login' element={<Login setToken={setToken} navigate={navigate}/>}/>
         <Route path='/' element={<Posts posts={posts}/>}/>
-        <Route path='/register'element={<Register setToken={setToken}/>}/>
+        <Route path='/register'element={<Register setToken={setToken} navigate={navigate}/>}/>
       </Routes>
     </div>
   );
