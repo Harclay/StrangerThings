@@ -19,6 +19,7 @@ function Nav( {setToken, setIsLoggedIn, isLoggedIn} ) {
               <button onClick={logout}>Log Out</button>
               <button><Link to="/create-post">Create Post</Link></button>
               <button><Link to="/">Posts</Link></button>
+              <button><Link to="/view-messages">Messages</Link></button>
             </>
           ) : (
             <>

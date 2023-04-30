@@ -6,7 +6,9 @@ import {
   Login,
   CreatePost,
   UpdatePost,
-  Nav
+  Nav,
+  MessageUser,
+  ViewMessages
   
 } from "./"
 import { fetchPosts, myData } from "../ajax-requests";
@@ -17,6 +19,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState ({});
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [viewAllMessages, setViewAllMessages] = useState([]);
   const navigate = useNavigate();
   const tokenStoreage = window.localStorage.getItem('token')
 
@@ -35,10 +38,14 @@ function App() {
 
   async function getMyData() {
     const results = await myData(token);
+    console.log(results, "results from my data")
     if (results.success) {
       setUser(results.data);
+      setViewAllMessages(results.data.messages)
     }
   }
+
+  console.log(viewAllMessages, "messages array");
 
   useEffect(() => {
     tokenCheck();
@@ -64,6 +71,8 @@ function App() {
         setIsLoggedIn={setIsLoggedIn} 
         isLoggedIn={isLoggedIn}/>
       <Routes>
+        <Route path="/view-messages" element={<ViewMessages viewAllMessages={viewAllMessages}/>} />
+        <Route path='/message-user/:postId/messages' element={<MessageUser token={token}/>}/>
         <Route path='/update-post/:postId' element={<UpdatePost posts={posts} token={token} getPosts={getPosts}/>}/>
         <Route path="/create-post" element={<CreatePost token={token} getPosts={getPosts}/>}/>
         <Route path='/login' element={<Login setToken={setToken} navigate={navigate}/>}/>

@@ -25,7 +25,7 @@ function Posts( {posts, isLoggedIn} ) {
                 ) : (
                   <Fragment>
                     <p>{post.title}</p>
-                    {isLoggedIn ? <button>Message</button> : null}
+                    {isLoggedIn ? <Link to={`/message-user/${post._id}/messages`}><button>Message</button></Link> : null}
                   </Fragment>
                 )
 
