@@ -64,10 +64,10 @@ function App() {
         setIsLoggedIn={setIsLoggedIn} 
         isLoggedIn={isLoggedIn}/>
       <Routes>
-        <Route path='/update-post:/id' element={<UpdatePost />}/>
+        <Route path='/update-post/:postId' element={<UpdatePost posts={posts}/>}/>
         <Route path="/create-post" element={<CreatePost token={token} getPosts={getPosts}/>}/>
         <Route path='/login' element={<Login setToken={setToken} navigate={navigate}/>}/>
-        <Route path='/' element={<Posts posts={posts}/>}/>
+        <Route path='/' element={<Posts posts={posts} isLoggedIn={isLoggedIn}/>}/>
         <Route path='/register'element={<Register setToken={setToken} navigate={navigate}/>}/>
       </Routes>
     </div>
