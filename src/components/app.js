@@ -29,7 +29,7 @@ function App() {
   async function getPosts() {
     const results = await fetchPosts(token);
     if (results.success) {
-      setPosts(results.data.posts);
+      setPosts(results.data.posts)
     }
   }
 
@@ -64,7 +64,7 @@ function App() {
         setIsLoggedIn={setIsLoggedIn} 
         isLoggedIn={isLoggedIn}/>
       <Routes>
-        <Route path='/update-post/:postId' element={<UpdatePost posts={posts}/>}/>
+        <Route path='/update-post/:postId' element={<UpdatePost posts={posts} token={token} getPosts={getPosts}/>}/>
         <Route path="/create-post" element={<CreatePost token={token} getPosts={getPosts}/>}/>
         <Route path='/login' element={<Login setToken={setToken} navigate={navigate}/>}/>
         <Route path='/' element={<Posts posts={posts} isLoggedIn={isLoggedIn}/>}/>
