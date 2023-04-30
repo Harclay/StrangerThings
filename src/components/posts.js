@@ -1,13 +1,25 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
+import { deletePost } from "../ajax-requests";
 
 
-function Posts( {posts, isLoggedIn} ) {
+
+
+function Posts( {posts, isLoggedIn, token, getPosts} ) {
   console.log(posts);
   if (!Array.isArray(posts)) {
     return <p>No posts to display.</p>;
   }
   
+  const handleDelete = async (postId) => {
+    try{
+      const results = await deletePost(token, postId)
+      console.log(results)
+      getPosts();
+    } catch (err) {
+      console.error(err);
+    }
+  } 
 
   return(
     <>
@@ -19,7 +31,7 @@ function Posts( {posts, isLoggedIn} ) {
                 post.isAuthor ? (
                   <>
                     <p >{post.title}</p>
-                    <button>Delete</button>
+                    <button onClick={() => handleDelete(post._id)}>Delete</button>
                     <Link to={`/update-post/${post._id}`}><button>Edit Post</button></Link>
                   </>
                 ) : (

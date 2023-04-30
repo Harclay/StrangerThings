@@ -4,6 +4,7 @@ import { login } from "../ajax-requests"
 function Login( {setToken, navigate} ) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [saveToken, setSaveToken] = useState(false)
     
 
     async function handleSubmit(event) {
@@ -14,7 +15,9 @@ function Login( {setToken, navigate} ) {
       const results = await login(user);
       if(results.success) {
           setToken(results.data.token)
-          window.localStorage.setItem('token', results.data.token)
+          if(saveToken){
+            window.localStorage.setItem('token', results.data.token)
+          }
           navigate('/')
       }
 
@@ -33,6 +36,13 @@ function Login( {setToken, navigate} ) {
           placeholder="Password"
           onChange={(event) => setPassword(event.target.value)}
         ></input>
+        <label>
+        <input
+            type="checkbox"
+            onChange={(event) => setSaveToken(true)}>
+          </input>
+          Stay Signed In?
+        </label>
         <button type="submit">submit</button>
       </form>
     );

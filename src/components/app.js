@@ -14,6 +14,7 @@ import {
 import { fetchPosts, myData } from "../ajax-requests";
 
 
+
 function App() {
   const [token, setToken] = useState('');
   const [posts, setPosts] = useState([]);
@@ -76,7 +77,7 @@ function App() {
         <Route path='/update-post/:postId' element={<UpdatePost posts={posts} token={token} getPosts={getPosts}/>}/>
         <Route path="/create-post" element={<CreatePost token={token} getPosts={getPosts}/>}/>
         <Route path='/login' element={<Login setToken={setToken} navigate={navigate}/>}/>
-        <Route path='/' element={<Posts posts={posts} isLoggedIn={isLoggedIn}/>}/>
+        <Route path='/' element={<Posts posts={posts} isLoggedIn={isLoggedIn} token={token} getPosts={getPosts}/>}/>
         <Route path='/register'element={<Register setToken={setToken} navigate={navigate}/>}/>
       </Routes>
     </div>
