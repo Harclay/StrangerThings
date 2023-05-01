@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { deletePost } from "../ajax-requests";
+import { Grid } from "@mui/material";
 
 
 
@@ -22,31 +23,39 @@ function Posts( {posts, isLoggedIn, token, getPosts} ) {
   } 
 
   return(
-    <>
-      {
-        posts && posts.map((post) =>{
-          return(
-            <Fragment key={post._id}>
-              {
-                post.isAuthor ? (
+    <Grid container spacing={2}>
+      {posts &&
+        posts.map((post) => {
+          return (
+            <Grid item xs={12} sm={6} md={4} key={post._id}>
+              <div style={{ padding: "1rem", backgroundColor: "#f4f4f4", }}>
+                {post.isAuthor ? (
                   <>
-                    <p >{post.title}</p>
+                    <p>{post.title}</p>
+                    <p>{post.description}</p>
+                    <p>{post.price}</p>
                     <button onClick={() => handleDelete(post._id)}>Delete</button>
-                    <Link to={`/update-post/${post._id}`}><button>Edit Post</button></Link>
+                    <Link to={`/update-post/${post._id}`}>
+                      <button>Edit Post</button>
+                    </Link>
                   </>
                 ) : (
                   <Fragment>
                     <p>{post.title}</p>
-                    {isLoggedIn ? <Link to={`/message-user/${post._id}/messages`}><button>Message</button></Link> : null}
+                    <p>{post.description}</p>
+                    <p>{post.price}</p>
+                    {isLoggedIn ? (
+                      <Link to={`/message-user/${post._id}/messages`}>
+                        <button>Message</button>
+                      </Link>
+                    ) : null}
                   </Fragment>
-                )
-
-              }
-            </Fragment>
-          )
-        })
-      }
-    </>
+                )}
+              </div>
+            </Grid>
+          );
+        })}
+    </Grid>
   )
 }
 

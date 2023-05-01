@@ -68,6 +68,7 @@ function UpdatePost( { posts, token, getPosts } ) {
               value={updatedLocation}
               onChange={(ev) => setLocation(ev.target.value)}
             />
+            I will Deliver?
             <input
               type="checkbox"
               checked={updatedWillDeliver}
